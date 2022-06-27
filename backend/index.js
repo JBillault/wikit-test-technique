@@ -17,7 +17,7 @@ app.use(express.json());
 
 // GET ALL TWEET FROM ONE AUTHOR OR ALL TWEET
 app.get("/tweets/", function (req, res) {
-  let sql = "SELECT * FROM Tweet";
+  let sql = "SELECT * FROM Tweet ORDER BY post_date DESC";
   const sqlValues = [];
   if (req.query.author) {
     sql += " WHERE author = ?";
@@ -37,16 +37,15 @@ app.get("/tweets/", function (req, res) {
 
 // POST A TWEET
 app.post("/tweets", function (req, res) {
-  const { author, content, date } = req.body;
+  const { author, content } = req.body;
   connection
     .promise()
-    .query("INSERT INTO Tweet (author, content, date) VALUES (?, ?, ?)", [
+    .query("INSERT INTO Tweet (author, content) VALUES (?, ?)", [
       author,
       content,
-      date,
     ])
     .then(() => {
-      res.status(201).send({ author, content, date });
+      res.status(201).send({ author, content });
     })
     .catch((err) => {
       console.log(err);
