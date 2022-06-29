@@ -3,18 +3,23 @@ import axios from "axios";
 import { BsTrash } from "react-icons/bs";
 import moment from "moment";
 import { AiOutlineClose } from "react-icons/ai";
+import { useSearchParams } from "react-router-dom";
 
+function toObject(searchParams) {
+  const res = {};
+  searchParams.forEach((value, key) => (res[key] = value));
+}
 const Home = () => {
   const [tweetList, setTweetList] = useState([]);
-  const [author, setAuthor] = useState("");
   const [popup, setPopup] = useState(false);
   const [id, setId] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/tweets?author=${author}`)
+      .get(`http://localhost:3001/tweets/?${searchParams}`)
       .then((res) => setTweetList(res.data));
-  }, [author]);
+  }, [searchParams]);
 
   function handleDelete(id) {
     const idString = id.toString();
@@ -38,8 +43,13 @@ const Home = () => {
         <input
           type="text"
           className="rounded-xl w-[30%] p-2"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
+          value={searchParams.get("author") || ""}
+          onChange={(e) =>
+            setSearchParams({
+              ...toObject(searchParams),
+              author: e.target.value,
+            })
+          }
         />
       </form>
       {tweetList.map((tweet) => (
