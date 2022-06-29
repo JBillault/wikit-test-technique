@@ -28,7 +28,6 @@ const Home = () => {
       .then(() => setTweetList(tweetList.filter((tweet) => tweet.id !== id)));
     setPopup(!popup);
   }
-  console.log(id);
   return (
     <div className="w-full h-screen text-center">
       <div className="max-w-[1240px] w-full h-[50%] mx-auto p-2 flex justify-center items-center">
