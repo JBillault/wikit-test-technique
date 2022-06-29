@@ -33,11 +33,14 @@ app.use((req, res, next) => {
 app.get("/tweets/", function (req, res) {
   let sql = "SELECT * FROM Tweet";
   const sqlValues = [];
+  const { limit, offset } = req.boby;
   if (req.query.author) {
     sql += " WHERE author LIKE CONCAT (?, '%')";
     sqlValues.push(req.query.author);
   }
-  sql += " ORDER BY post_date DESC";
+  sql += " ORDER BY post_date DESC LIMIT ? OFFSET ?";
+  sqlValues.push(limit);
+  sqlValues.push(offset);
   // if (req.query.limit) {
   //   sql += " LIMIT ?";
   //   sqlValues.push(req.query.limit);
