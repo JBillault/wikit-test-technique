@@ -24,6 +24,6 @@ Ce test technique a été réalisé avec la bibliothèque REACT pour le front av
 
 Pour aller plus loin:
 
-1. Il aurait été intéressant de mettre en place un système de login, en créant une second table liée (`username`, `password`) dans la base de donnée et mettre en place un système de token (jwt).
-2. Il aurait fallu mettre en place un système de pagination lors de l'affichage de la liste de tweet. Réalisable en ajoutant les commandes `LIMIT`et `OFFSET` dans les commandes SQL.
+1. Une tentative de mise en place du système de pagination a été faite. Réalisable en ajoutant les commandes `LIMIT`et `OFFSET` dans les commandes SQL. Je n'ai pas réussi à mettre en place cette fonctionalité qui a été initiée dans la branche `page`.
+2. Il aurait été intéressant de mettre en place un système de login, en créant une second table liée (`username`, `password`) dans la base de donnée et mettre en place un système de token (jwt).
 3. Il est aussi possible de mettre en place un chat à l'aide de websocket (socket.io).

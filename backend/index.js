@@ -38,14 +38,6 @@ app.get("/tweets/", function (req, res) {
     sqlValues.push(req.query.author);
   }
   sql += " ORDER BY post_date DESC";
-  // if (req.query.limit) {
-  //   sql += " LIMIT ?";
-  //   sqlValues.push(req.query.limit);
-  // }
-  // if (req.query.offset) {
-  //   sql += " OFFSET ?";
-  //   sqlValues.push(req.query.offset);
-  // }
   connection
     .promise()
     .query(sql, sqlValues)
