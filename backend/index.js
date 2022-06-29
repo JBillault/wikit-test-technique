@@ -31,9 +31,9 @@ app.use((req, res, next) => {
 
 // GET ALL TWEET FROM ONE AUTHOR OR ALL TWEET
 app.get("/tweets/", function (req, res) {
+  const { limit, offset } = req.boby;
   let sql = "SELECT * FROM Tweet";
   const sqlValues = [];
-  const { limit, offset } = req.boby;
   if (req.query.author) {
     sql += " WHERE author LIKE CONCAT (?, '%')";
     sqlValues.push(req.query.author);
