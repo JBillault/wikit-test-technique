@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BsTrash } from "react-icons/bs";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import moment from "moment";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -19,7 +18,9 @@ const Home = () => {
 
   function handleDelete(id) {
     const idString = id.toString();
-    axios.delete(`http://localhost:3001/tweets/${idString}`);
+    axios
+      .delete(`http://localhost:3001/tweets/${idString}`)
+      .then(() => setTweetList(tweetList.filter((tweet) => tweet.id !== id)));
     setPopup(!popup);
   }
   console.log(id);
@@ -59,8 +60,7 @@ const Home = () => {
             </div>
           </div>
           <h4 className="my-10">{tweet.content}</h4>
-          <div className="flex justify-between border-t border-gray-300 my-4">
-            <div>{tweet.likes}</div>
+          <div className="flex justify-end border-t border-gray-300 my-4">
             <div>{moment(tweet.post_date).format("DD-MM-YYYY")}</div>
           </div>
         </div>
