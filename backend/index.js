@@ -34,7 +34,7 @@ app.get("/tweets/", function (req, res) {
   let sql = "SELECT * FROM Tweet";
   const sqlValues = [];
   if (req.query.author) {
-    sql += " WHERE author = ?";
+    sql += " WHERE author LIKE CONCAT (?, '%')";
     sqlValues.push(req.query.author);
   }
   sql += " ORDER BY post_date DESC";
