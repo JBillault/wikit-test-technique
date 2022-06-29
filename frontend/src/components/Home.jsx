@@ -4,6 +4,7 @@ import { BsTrash } from "react-icons/bs";
 import moment from "moment";
 import { AiOutlineClose } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
+import Pagination from "./Pagination";
 
 function toObject(searchParams) {
   const res = {};
@@ -14,12 +15,32 @@ const Home = () => {
   const [popup, setPopup] = useState(false);
   const [id, setId] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(parseInt(toObject.page) || 1);
+  const itemsPerPage = 5;
+  const offset = (currentPage - 1) * itemsPerPage;
+  const [numberOfItems, setNumberOfItems] = useState(null);
 
   useEffect(() => {
+    setSearchParams({
+      ...toObject(searchParams),
+      page: currentPage,
+    });
+  }, [currentPage, searchParams]);
+
+  useEffect(() => {
+    // setSearchParams({
+    //   ...toObject(searchParams),
+    //   limit: itemsPerPage,
+    //   offset: (currentPage - 1) * itemsPerPage,
+    // });
     axios
-      .get(`http://localhost:3001/tweets/?${searchParams}`)
-      .then((res) => setTweetList(res.data));
-  }, [searchParams]);
+      .get(`http://localhost:3001/tweets/?${searchParams}`, {
+        itemsPerPage,
+        offset,
+      })
+      .then((res) => setTweetList(res.data))
+      .then(() => setNumberOfItems(tweetList.length));
+  }, [searchParams, offset, itemsPerPage, setSearchParams]);
 
   function handleDelete(id) {
     const idString = id.toString();
@@ -28,7 +49,8 @@ const Home = () => {
       .then(() => setTweetList(tweetList.filter((tweet) => tweet.id !== id)));
     setPopup(!popup);
   }
-  console.log(id);
+  console.log(searchParams);
+  console.log(itemsPerPage);
   return (
     <div className="w-full h-screen text-center">
       <div className="max-w-[1240px] w-full h-[50%] mx-auto p-2 flex justify-center items-center">
@@ -116,6 +138,16 @@ const Home = () => {
             </button>
           </div>
         </div>
+      </div>
+      <div
+        className="flex justify-center w-full mt-3"
+        style={{ backgroundColor: "var(--main-bg-color)" }}
+      >
+        <Pagination
+          index={Math.ceil(numberOfItems / itemsPerPage)}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
