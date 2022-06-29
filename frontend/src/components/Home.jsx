@@ -15,17 +15,17 @@ const Home = () => {
   const [popup, setPopup] = useState(false);
   const [id, setId] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(parseInt(toObject.page) || 1);
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const offset = (currentPage - 1) * itemsPerPage;
   const [numberOfItems, setNumberOfItems] = useState(null);
 
-  useEffect(() => {
-    setSearchParams({
-      ...toObject(searchParams),
-      page: currentPage,
-    });
-  }, [currentPage, searchParams]);
+  // useEffect(() => {
+  //   setSearchParams({
+  //     ...toObject(searchParams),
+  //     page: currentPage,
+  //   });
+  // }, [currentPage, searchParams]);
 
   useEffect(() => {
     // setSearchParams({
