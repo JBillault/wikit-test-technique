@@ -1,23 +1,35 @@
 const connection = require("../db-config");
+const tweetRepo = require("../repositories/tweet");
 
-exports.getAllTweet = (req, res) => {
-  let sql = "SELECT * FROM Tweet";
-  const sqlValues = [];
-  if (req.query.author) {
-    sql += " WHERE author LIKE CONCAT (?, '%')";
-    sqlValues.push(req.query.author);
+exports.getAllTweet = async (req, res) => {
+  // let sql = "SELECT * FROM Tweet";
+  // const sqlValues = [];
+  // if (req.query.author) {
+  //   sql += " WHERE author LIKE CONCAT (?, '%')";
+  //   sqlValues.push(req.query.author);
+  // }
+  // sql += " ORDER BY post_date DESC";
+  // try {
+  //   const result = await connection.promise().query(sql, sqlValues);
+  //   // .then(([results]) => {
+  //   //   res.status(200).json(results);
+  //   // })
+  //   // .catch((err) => {
+  //   //   console.log(err);
+  //   //   res.status(500).send("Error retrieving data from the database");
+  //   // });
+  //   res.status(200).json(result[0]);
+  // } catch (error) {
+  //   console.error("Error retrieving data from the database", error);
+  //   res.send(500).send("Error retrieving data from the database");
+  // }
+  try {
+    const result = await tweetRepo.getAllTweet(req.query.author);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error retrieving data from the database", error);
+    res.send(500).send("Error retrieving data from the database");
   }
-  sql += " ORDER BY post_date DESC";
-  connection
-    .promise()
-    .query(sql, sqlValues)
-    .then(([results]) => {
-      res.status(200).json(results);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send("Error retrieving data from the database");
-    });
 };
 
 exports.postTweet = (req, res) => {
