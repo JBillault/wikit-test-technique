@@ -11,3 +11,14 @@ exports.getAllTweet = async (author) => {
   const result = await connection.promise().query(sql, sqlValues);
   return result[0];
 };
+
+exports.postTweet = async (author, content) => {
+  let sql = "INSERT INTO Tweet (author, content) VALUES (?, ?)";
+  await connection.promise().query(sql, [author, content]);
+  return { author, content };
+};
+
+exports.deleteTweet = async (id) => {
+  let sql = "DELETE FROM Tweet WHERE id = ?";
+  await connection.promise().query(sql, [id]);
+};
