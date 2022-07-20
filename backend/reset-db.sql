@@ -1,3 +1,11 @@
+CREATE TABLE 'User' (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pseudo`varchar(150) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  'password' varchar(500) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE `Tweet` (
   `id` int NOT NULL AUTO_INCREMENT,
   `author` varchar(150) NOT NULL,

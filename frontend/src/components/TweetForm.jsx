@@ -22,8 +22,8 @@ function TweetForm() {
   return (
     <div className="w-full h-screen text-center">
       <div className="max-w-[1240px] w-full h-[50%] mx-auto p-2 flex justify-center items-center">
-        <h1 className="py-4 text-gray-700">
-          Ajouter un <span className="text-[#53B6F9]">Tweet</span>
+        <h1 className="py-4 text-[1D2723]">
+          Ajouter un <span className="text-[#F19333]">Tweet</span>
         </h1>
       </div>
       <form onSubmit={handleSubmit}>
@@ -38,7 +38,7 @@ function TweetForm() {
               type="text"
               id="pseudo"
               required
-              className="rounded-xl w-[50%] p-2"
+              className="rounded-xl w-[50%] p-2 bg-[#ACBFC2]"
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
             />
@@ -51,7 +51,7 @@ function TweetForm() {
           <div className="my-4">
             <textarea
               id="content"
-              className="rounded-xl w-[50%] h-[100px] p-2"
+              className="rounded-xl w-[50%] h-[100px] p-2 bg-[#ACBFC2]"
               required
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -59,7 +59,7 @@ function TweetForm() {
           </div>
           <button
             type="submit"
-            className="w-[20%] mx-auto flex justify-evenly text-[#ecf0f3] shadow-xl shadow-gray-400 rounded-xl bg-[#53B6F9]"
+            className="w-[20%] mx-auto flex justify-evenly text-[#1D2732] shadow-xl shadow-[#1D2723] rounded-xl bg-[#F19333]"
           >
             <AiOutlineSend className="my-auto" />
             <p>Envoyer</p>

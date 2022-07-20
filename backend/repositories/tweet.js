@@ -22,3 +22,9 @@ exports.deleteTweet = async (id) => {
   let sql = "DELETE FROM Tweet WHERE id = ?";
   await connection.promise().query(sql, [id]);
 };
+
+exports.patchTweet = async (id, content) => {
+  let sql = "UPDATE Tweet SET content = ? WHERE Tweet.id = ?";
+  await connection.promise().query(sql, [content, id]);
+  return { id, content };
+};

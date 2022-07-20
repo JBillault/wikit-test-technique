@@ -1,4 +1,3 @@
-const connection = require("../db-config");
 const tweetRepo = require("../repositories/tweet");
 
 exports.getAllTweet = async (req, res) => {
@@ -30,5 +29,17 @@ exports.deleteTweet = async (req, res) => {
   } catch (error) {
     console.error("Error deleting your tweet", error);
     res.status(500).send("Error deleting your tweet");
+  }
+};
+
+exports.patchTweet = async (req, res) => {
+  const { id } = req.params;
+  const { content } = req.body;
+  try {
+    await tweetRepo.patchTweet(id, content);
+    res.status(200).send("Tweet has been successfully modify");
+  } catch (error) {
+    console.error("Error modifying your tweet", error);
+    res.status(500).send("Error modifying your tweet");
   }
 };

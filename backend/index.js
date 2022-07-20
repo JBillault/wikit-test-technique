@@ -1,10 +1,10 @@
 require("dotenv").config();
 const connection = require("./db-config");
-const app = require('./app');
+const app = require("./app");
 
 const port = process.env.PORT ?? 3001;
 
-connection.connect((err) => {
+connection.getConnection((err) => {
   if (err) {
     console.error("error connecting: " + err.stack);
   } else {
