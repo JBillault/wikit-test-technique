@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 
 const tweetRoutes = require("./routes/tweet");
+const userRoutes = require("./routes/user");
 
 // FIXING THE CORS PROBLEM
 app.use((req, res, next) => {
@@ -21,5 +22,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use("/tweets", tweetRoutes);
+app.use("/user", userRoutes);
 
 module.exports = app;

@@ -55,10 +55,10 @@ const Header = () => {
           </div>
           <div className="py-4 flex flex-col">
             <ul className="uppercase">
-              <NavLink to="/">
+              <NavLink to="/" onClick={() => setNav(!nav)}>
                 <li className="py-4 text-sm">Accueil</li>
               </NavLink>
-              <NavLink to="/TweetForm">
+              <NavLink to="/TweetForm" onClick={() => setNav(!nav)}>
                 <li className="py-4 text-sm">Ajouter un tweet</li>
               </NavLink>
             </ul>
