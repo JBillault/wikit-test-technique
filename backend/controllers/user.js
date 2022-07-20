@@ -1,5 +1,6 @@
 const userRepo = require("../repositories/user");
-const { genSaltSync, hashSync } = require("bcrypt");
+const { genSaltSync, hashSync, compareSync } = require("bcrypt");
+const { sign } = require("jsonwebtoken");
 
 exports.createUser = async (req, res) => {
   const body = req.body;
@@ -47,5 +48,26 @@ exports.deleteUser = async (req, res) => {
   } catch (error) {
     console.error("Error deleting the user", error);
     res.status(500).send("Error deleting the user");
+  }
+};
+
+exports.login = async (req, res) => {
+  const body = req.body;
+  try {
+    const results = await userRepo.getUserByUserEmail(body.email);
+    const [result] = results;
+    const compare = compareSync(body.password, result.password);
+    if (compare) {
+      result.password = undefined;
+      const jsontoken = sign({ result: result }, "qwe1234", {
+        expiresIn: "1h",
+      });
+      return res.json({ message: "login successfully", token: jsontoken });
+    } else {
+      return res.json({ data: "Invalid email or password" });
+    }
+  } catch (error) {
+    console.error("Invalid email or password", error);
+    res.status(401).send("401 : Invalid email or password");
   }
 };
