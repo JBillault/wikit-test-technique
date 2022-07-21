@@ -5,6 +5,8 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.3",
     "momentjs": "^2.0.0",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "react-toastify": "^9.0.7",
+    "react-use": "^17.4.0"
   }
 }

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { BsTrash, BsPencil } from "react-icons/bs";
 import moment from "moment";
 import { AiOutlineClose } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
+import { TokenContext } from "../context/tokenContext";
 
 function toObject(searchParams) {
   const res = {};
@@ -16,17 +17,24 @@ const Home = () => {
   const [id, setId] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const [content, setContent] = useState("");
-
+  const tokenShare = useContext(TokenContext);
+  let config = {
+    headers: {
+      Authorization: "Bearer " + tokenShare.token,
+    },
+  };
+ // console.log("token", tokenShare.token);
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/tweets/?${searchParams}`)
+      .get(`http://localhost:3001/tweets/?${searchParams}`, config)
+      // .then((res) => console.log(res));
       .then((res) => setTweetList(res.data));
-  }, [searchParams]);
+  }, [searchParams, config]);
 
   function handleDelete(id) {
     const idString = id.toString();
     axios
-      .delete(`http://localhost:3001/tweets/${idString}`)
+      .delete(`http://localhost:3001/tweets/${idString}`, config)
       .then(() => setTweetList(tweetList.filter((tweet) => tweet.id !== id)));
     setPopup(!popup);
   }
@@ -34,7 +42,7 @@ const Home = () => {
   function handlePatch(e, id) {
     const idString = id.toString();
     axios
-      .put(`http://localhost:3001/tweets/${idString}`, {
+      .put(`http://localhost:3001/tweets/${idString}`, config, {
         content,
       })
       .then(() => {
@@ -42,7 +50,7 @@ const Home = () => {
       })
       .then(() => {
         axios
-          .get(`http://localhost:3001/tweets/`)
+          .get(`http://localhost:3001/tweets/`, config)
           .then((res) => setTweetList(res.data));
       });
   }
@@ -52,7 +60,6 @@ const Home = () => {
         <div>
           <h1 className="py-4 text-[#ACBFC2]">
             Bienvenue sur <span className="text-[#F19333]">Wikit Tweet</span>
-            {/* Bienvenue sur <span className="text-[#53B6F9]">Wikit Tweet</span> */}
           </h1>
         </div>
       </div>

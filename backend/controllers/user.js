@@ -56,6 +56,7 @@ exports.login = async (req, res) => {
   try {
     const results = await userRepo.getUserByUserEmail(body.email);
     const [result] = results;
+    console.log(results);
     const compare = compareSync(body.password, result.password);
     if (compare) {
       result.password = undefined;
@@ -64,7 +65,7 @@ exports.login = async (req, res) => {
       });
       return res.json({ message: "login successfully", token: jsontoken });
     } else {
-      return res.json({ data: "Invalid email or password" });
+      return res.status(401).send("401 : Invalid email or password");
     }
   } catch (error) {
     console.error("Invalid email or password", error);
