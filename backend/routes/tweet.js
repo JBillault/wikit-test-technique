@@ -7,6 +7,6 @@ const { checkToken } = require("../auth/token_validation");
 router.get("/", checkToken, tweetCtrl.getAllTweet);
 router.post("/", checkToken, tweetCtrl.postTweet);
 router.delete("/:id", checkToken, tweetCtrl.deleteTweet);
-router.put("/:id", checkToken, tweetCtrl.patchTweet);
+router.patch("/:id", checkToken, tweetCtrl.patchTweet);
 
 module.exports = router;

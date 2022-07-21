@@ -5,6 +5,7 @@ import moment from "moment";
 import { AiOutlineClose } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
 import { TokenContext } from "../context/tokenContext";
+import Tweet from "./Tweet";
 
 function toObject(searchParams) {
   const res = {};
@@ -23,11 +24,9 @@ const Home = () => {
       Authorization: "Bearer " + tokenShare.token,
     },
   };
- // console.log("token", tokenShare.token);
   useEffect(() => {
     axios
       .get(`http://localhost:3001/tweets/?${searchParams}`, config)
-      // .then((res) => console.log(res));
       .then((res) => setTweetList(res.data));
   }, [searchParams, config]);
 
@@ -39,12 +38,16 @@ const Home = () => {
     setPopup(!popup);
   }
 
-  function handlePatch(e, id) {
+  function handlePatch(id) {
     const idString = id.toString();
     axios
-      .put(`http://localhost:3001/tweets/${idString}`, config, {
-        content,
-      })
+      .put(
+        `http://localhost:3001/tweets/${idString}`,
+        {
+          content,
+        },
+        config
+      )
       .then(() => {
         setContent("");
       })
@@ -78,38 +81,39 @@ const Home = () => {
         />
       </form>
       {tweetList.map((tweet) => (
-        <div
-          className="p-6 w-[75%] mx-auto my-4 shadow-xl rounded-xl hover:scale-105 ease-in duration-300 bg-[#ACBFC2]"
-          key={tweet.id}
-        >
-          <div className="flex justify-between border-b border-gray-300 my-4">
-            <h3 className="text-[#F19333]">{tweet.author}</h3>
-            <div className="flex">
-              <div
-                className="mx-3 cursor-pointer"
-                onClick={() => {
-                  setId(tweet.id);
-                  setPopupPatch(!popupPacth);
-                }}
-              >
-                <BsPencil size={20} />
-              </div>
-              <div
-                className="cursor-pointer"
-                onClick={() => {
-                  setPopup(!popup);
-                  setId(tweet.id);
-                }}
-              >
-                <BsTrash size={20} />
-              </div>
-            </div>
-          </div>
-          <h4 className="my-10">{tweet.content}</h4>
-          <div className="flex justify-end border-t border-gray-300 my-4">
-            <div>{moment(tweet.post_date).format("DD-MM-YYYY")}</div>
-          </div>
-        </div>
+        // <div
+        //   className="p-6 w-[75%] mx-auto my-4 shadow-xl rounded-xl hover:scale-105 ease-in duration-300 bg-[#ACBFC2]"
+        //   key={tweet.id}
+        // >
+        //   <div className="flex justify-between border-b border-gray-300 my-4">
+        //     <h3 className="text-[#F19333]">{tweet.author}</h3>
+        //     <div className="flex">
+        //       <div
+        //         className="mx-3 cursor-pointer"
+        //         onClick={() => {
+        //           setId(tweet.id);
+        //           setPopupPatch(!popupPacth);
+        //         }}
+        //       >
+        //         <BsPencil size={20} />
+        //       </div>
+        //       <div
+        //         className="cursor-pointer"
+        //         onClick={() => {
+        //           setPopup(!popup);
+        //           setId(tweet.id);
+        //         }}
+        //       >
+        //         <BsTrash size={20} />
+        //       </div>
+        //     </div>
+        //   </div>
+        //   <h4 className="my-10">{tweet.content}</h4>
+        //   <div className="flex justify-end border-t border-gray-300 my-4">
+        //     <div>{moment(tweet.post_date).format("DD-MM-YYYY")}</div>
+        //   </div>
+        // </div>
+        <Tweet tweet={tweet} />
       ))}
       <div
         className={
@@ -153,7 +157,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         className={
           popupPacth ? "fixed left-0 top-0 w-full h-screen bg-black/70" : ""
         }
@@ -194,8 +198,8 @@ const Home = () => {
             <button
               type="submit"
               className="w-[30%] h-[30px] mx-auto flex justify-evenly text-[#1D2723] shadow-xl shadow-[#1D2723] rounded-xl bg-[#F19333]"
-              onClick={(e) => {
-                handlePatch(e, id);
+              onClick={() => {
+                handlePatch(id);
                 setPopupPatch(!popupPacth);
               }}
             >
@@ -210,7 +214,7 @@ const Home = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
