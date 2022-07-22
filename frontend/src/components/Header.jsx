@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 const Header = () => {
   let navigate = useNavigate();
   const [nav, setNav] = useState(false);
+  const token = localStorage.getItem("token");
   const handleNav = () => {
     setNav(!nav);
   };
@@ -23,21 +24,27 @@ const Header = () => {
         <img src={astronaut} alt="logo-wikit" style={{ height: "80px" }} />
         <div>
           <ul className="hidden md:flex">
-            <NavLink to="/Feed">
-              <li className="ml-10 text-sm uppercase hover:border-b">
-                Fil d'Actualité
-              </li>
-            </NavLink>
-            <NavLink to="/TweetForm">
-              <li className="ml-10 text-sm uppercase hover:border-b">
-                Ajouter un tweet
-              </li>
-            </NavLink>
-            <NavLink to="/" onClick={() => handleLogOut()}>
-              <li className="ml-10 text-sm uppercase hover:border-b">
-                Log out
-              </li>
-            </NavLink>
+            {token && (
+              <NavLink to="/Feed">
+                <li className="ml-10 text-sm uppercase hover:border-b">
+                  Fil d'Actualité
+                </li>
+              </NavLink>
+            )}
+            {token && (
+              <NavLink to="/TweetForm">
+                <li className="ml-10 text-sm uppercase hover:border-b">
+                  Ajouter un tweet
+                </li>
+              </NavLink>
+            )}
+            {token && (
+              <NavLink to="/" onClick={() => handleLogOut()}>
+                <li className="ml-10 text-sm uppercase hover:border-b">
+                  Log out
+                </li>
+              </NavLink>
+            )}
           </ul>
           <div className="md:hidden cursor-pointer" onClick={handleNav}>
             <AiOutlineMenu size={25} style={{ color: "#F19333" }} />
@@ -67,21 +74,27 @@ const Header = () => {
           </div>
           <div className="py-4 flex flex-col">
             <ul className="uppercase">
-              <NavLink to="/Feed" onClick={() => setNav(!nav)}>
-                <li className="py-4 text-sm">Fil d'Actualité</li>
-              </NavLink>
-              <NavLink to="/TweetForm" onClick={() => setNav(!nav)}>
-                <li className="py-4 text-sm">Ajouter un tweet</li>
-              </NavLink>
-              <NavLink
-                to="/"
-                onClick={() => {
-                  setNav(!nav);
-                  handleLogOut();
-                }}
-              >
-                <li className="py-4 text-sm">Log out</li>
-              </NavLink>
+              {token && (
+                <NavLink to="/Feed" onClick={() => setNav(!nav)}>
+                  <li className="py-4 text-sm">Fil d'Actualité</li>
+                </NavLink>
+              )}
+              {token && (
+                <NavLink to="/TweetForm" onClick={() => setNav(!nav)}>
+                  <li className="py-4 text-sm">Ajouter un tweet</li>
+                </NavLink>
+              )}
+              {token && (
+                <NavLink
+                  to="/"
+                  onClick={() => {
+                    setNav(!nav);
+                    handleLogOut();
+                  }}
+                >
+                  <li className="py-4 text-sm">Log out</li>
+                </NavLink>
+              )}
             </ul>
             <div className="pt-40">
               <p className="uppercase tracking-widest text-[#5651e5]">{`Let's Connect`}</p>

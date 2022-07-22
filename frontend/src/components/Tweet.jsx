@@ -28,10 +28,7 @@ export default function Tweet({ tweet }) {
         },
         config
       )
-      .then(() => setPopupPatch(!popupPacth))
-      .then(() => {
-        setModifiedTweet("");
-      });
+      .then(() => setPopupPatch(!popupPacth));
   }
 
   function handleDelete(id) {
