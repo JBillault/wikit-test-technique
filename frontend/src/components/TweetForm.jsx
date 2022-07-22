@@ -5,14 +5,24 @@ import axios from "axios";
 function TweetForm() {
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
+  const token = localStorage.getItem("token");
+  let config = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/tweets", {
-        author,
-        content,
-      })
+      .post(
+        "http://localhost:3001/tweets",
+        {
+          author,
+          content,
+        },
+        config
+      )
       .then(() => {
         setAuthor("");
         setContent("");

@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { FaUserAstronaut } from "react-icons/fa";
 import axios from "axios";
-import { TokenContext } from "../context/tokenContext";
 import { useNavigate } from "react-router";
 
 export default function Login() {
@@ -11,7 +10,6 @@ export default function Login() {
   const [emailSignUp, setEmailSignUp] = useState("");
   const [passwordSignUp, setPasswordSignUp] = useState("");
   const [pseudoSignUp, setPseudoSignUp] = useState("");
-  const tokenShare = useContext(TokenContext);
 
   function handleConnection(e) {
     e.preventDefault();
@@ -22,7 +20,7 @@ export default function Login() {
           password: passwordSignIn,
         })
         .then((res) => res.data)
-        .then((data) => tokenShare.setToken(data.token))
+        .then((data) => localStorage.setItem("token", data.token))
         .then(() => {
           setEmailSignIn("");
           setPasswordSignIn("");

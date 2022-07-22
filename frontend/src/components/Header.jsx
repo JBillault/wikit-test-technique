@@ -4,26 +4,38 @@ import wikit from "../assets/logo-wikit.png";
 import astronaut from "../assets/astronaute.png";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 const Header = () => {
+  let navigate = useNavigate();
   const [nav, setNav] = useState(false);
   const handleNav = () => {
     setNav(!nav);
   };
+
+  function handleLogOut() {
+    localStorage.setItem("token", "");
+    navigate("../", { replace: true });
+  }
   return (
     <div className="fixed w-full h-20 shadow-xl z-[100]">
       <div className="flex justify-between items-center w-full h-full px-2 2xl:px-16">
         <img src={astronaut} alt="logo-wikit" style={{ height: "80px" }} />
         <div>
           <ul className="hidden md:flex">
-            <NavLink to="/">
+            <NavLink to="/Feed">
               <li className="ml-10 text-sm uppercase hover:border-b">
-                Accueil
+                Fil d'Actualité
               </li>
             </NavLink>
             <NavLink to="/TweetForm">
               <li className="ml-10 text-sm uppercase hover:border-b">
                 Ajouter un tweet
+              </li>
+            </NavLink>
+            <NavLink to="/" onClick={() => handleLogOut()}>
+              <li className="ml-10 text-sm uppercase hover:border-b">
+                Log out
               </li>
             </NavLink>
           </ul>
@@ -55,11 +67,20 @@ const Header = () => {
           </div>
           <div className="py-4 flex flex-col">
             <ul className="uppercase">
-              <NavLink to="/" onClick={() => setNav(!nav)}>
-                <li className="py-4 text-sm">Accueil</li>
+              <NavLink to="/Feed" onClick={() => setNav(!nav)}>
+                <li className="py-4 text-sm">Fil d'Actualité</li>
               </NavLink>
               <NavLink to="/TweetForm" onClick={() => setNav(!nav)}>
                 <li className="py-4 text-sm">Ajouter un tweet</li>
+              </NavLink>
+              <NavLink
+                to="/"
+                onClick={() => {
+                  setNav(!nav);
+                  handleLogOut();
+                }}
+              >
+                <li className="py-4 text-sm">Log out</li>
               </NavLink>
             </ul>
             <div className="pt-40">
