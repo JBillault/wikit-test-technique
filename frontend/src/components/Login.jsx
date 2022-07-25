@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserAstronaut } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router";
@@ -11,10 +11,16 @@ export default function Login() {
   const [passwordSignUp, setPasswordSignUp] = useState("");
   const [pseudoSignUp, setPseudoSignUp] = useState("");
 
-  function handleConnection(e) {
+  const getUser = async (email) => {
+    await axios
+      .get("http://localhost:3001/user/email", { email })
+      .then((res) => console.log(email, res));
+  };
+
+  async function handleConnection(e) {
     e.preventDefault();
     try {
-      axios
+      await axios
         .post("http://localhost:3001/user/login", {
           email: emailSignIn,
           password: passwordSignIn,
@@ -30,6 +36,10 @@ export default function Login() {
       navigate("../", { replace: true });
     }
   }
+
+  useEffect(() => {
+    getUser(emailSignIn);
+  }, [emailSignIn]);
 
   function handleSingUp(e) {
     e.preventDefault();

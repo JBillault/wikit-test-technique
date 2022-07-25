@@ -4,6 +4,7 @@ const router = express.Router();
 const userCtrl = require("../controllers/user");
 const { checkToken } = require("../auth/token_validation");
 
+router.get("/email", userCtrl.getUserByUserEmail);
 router.post("/", userCtrl.createUser);
 router.get("/", checkToken, userCtrl.getAllUsers);
 router.get("/:id", checkToken, userCtrl.getOneUser);

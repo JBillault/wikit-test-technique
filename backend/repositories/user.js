@@ -28,3 +28,9 @@ exports.getUserByUserEmail = async (email) => {
   const result = await connection.promise().query(sql, [email]);
   return result[0];
 };
+
+exports.getUserByEmail = async (email) => {
+  let sql = "SELECT id, pseudo, email  FROM User WHERE email = ?";
+  const result = await connection.promise().query(sql, [email]);
+  return result[0];
+};

@@ -72,3 +72,14 @@ exports.login = async (req, res) => {
     res.status(401).send("401 : Invalid email or password");
   }
 };
+
+exports.getUserByUserEmail = async (req, res) => {
+  const body = req.body;
+  try {
+    const result = await userRepo.getUserByEmail(body.email);
+    res.status(200).send(result);
+  } catch (error) {
+    console.error("Error retrieving user from database", error);
+    res.send(500).send("Error retrieving user from database");
+  }
+};
